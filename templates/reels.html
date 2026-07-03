@@ -1,0 +1,527 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+
+{% block content %}
+
+<style>
+
+body{
+    background:black;
+    margin:0;
+    overflow:hidden;
+}
+
+
+.reel-container{
+    height:100vh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+}
+
+
+.reel{
+    height:100vh;
+    width:100vw;
+    scroll-snap-align:start;
+    position:relative;
+}
+
+
+.reel video{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    object-fit:cover;
+}
+
+
+.info{
+    position:absolute;
+    bottom:90px;
+    left:15px;
+    color:white;
+    z-index:10;
+}
+
+
+.actions{
+
+    position:absolute;
+    right:15px;
+    bottom:110px;
+
+    color:white;
+
+    font-size:24px;
+
+    text-align:center;
+
+    z-index:10;
+
+}
+
+
+
+.actions div{
+
+    margin-top:20px;
+
+    cursor:pointer;
+
+}
+
+
+
+.like-count{
+
+    font-size:12px;
+
+}
+
+
+
+.download-link{
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+
+
+.comment-section{
+
+    position:absolute;
+
+    bottom:20px;
+
+    left:15px;
+
+    width:70%;
+
+    color:white;
+
+}
+
+
+
+.comments-list p{
+
+    margin:3px 0;
+
+    font-size:12px;
+
+}
+
+
+
+
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    right:0;
+
+
+    background:rgba(0,0,0,.8);
+
+
+    display:flex;
+
+
+    justify-content:space-around;
+
+
+    align-items:center;
+
+
+    padding:10px;
+
+
+    z-index:999;
+
+}
+
+
+
+.bottom-nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:24px;
+
+}
+
+
+
+.profile-icon{
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+
+.msg-icon{
+
+    font-size:24px;
+
+    transform:rotate(-45deg);
+
+    color:white;
+
+}
+
+
+
+</style>
+
+
+
+
+<div class="reel-container">
+
+
+{% for video in videos %}
+
+
+
+<div class="reel">
+
+
+<video autoplay muted loop controls>
+
+
+<source src="{{ video.video_files.0.link }}" type="video/mp4">
+
+
+</video>
+
+
+
+
+<div class="info">
+
+
+<h5>@Pexels</h5>
+
+
+<p>{{ video.user.name }}</p>
+
+
+</div>
+
+
+
+
+<div class="actions">
+
+
+
+<div onclick="likeVideo(this)">
+
+
+❤️
+
+<br>
+
+
+<span class="like-count">0</span>
+
+
+</div>
+
+
+
+
+
+<div onclick="openComment(this)">
+
+💬
+
+</div>
+
+
+
+
+
+<div onclick="shareVideo()">
+
+📤
+
+</div>
+
+
+
+
+
+<div>
+
+<a href="{{ video.video_files.0.link }}"
+class="download-link"
+target="_blank">
+
+⬇️
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="comment-section">
+
+
+<div class="comments-list"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+
+{% empty %}
+
+
+<div class="reel">
+
+<div class="info">
+
+<h3>No Videos Found 🎬</h3>
+
+</div>
+
+</div>
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+
+
+
+
+<div class="bottom-nav">
+
+
+<a href="/home/">
+
+🏠
+
+</a>
+
+
+
+<a href="/reels/">
+
+🎬
+
+</a>
+
+
+
+
+<a href="/profile/{{request.user.username}}/">
+
+
+
+{% if request.user.profile.profile_pic %}
+
+
+<img src="{{ request.user.profile.profile_pic.url }}"
+class="profile-icon">
+
+
+
+{% else %}
+
+
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="profile-icon">
+
+
+{% endif %}
+
+
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+
+function likeVideo(btn){
+
+
+let count = btn.querySelector('.like-count');
+
+
+let number = parseInt(count.innerText);
+
+
+
+if(btn.classList.contains("liked")){
+
+
+number--;
+
+
+btn.classList.remove("liked");
+
+
+}
+
+else{
+
+
+number++;
+
+
+btn.classList.add("liked");
+
+
+}
+
+
+
+count.innerText = number;
+
+
+}
+
+
+
+
+
+function openComment(btn){
+
+
+let comment = prompt("Write your comment:");
+
+
+
+if(comment){
+
+
+let reel = btn.closest('.reel');
+
+
+let box = reel.querySelector('.comments-list');
+
+
+
+box.innerHTML +=
+
+`<p><b>You:</b> ${comment}</p>`;
+
+
+}
+
+
+}
+
+
+
+
+
+
+function shareVideo(){
+
+
+
+let data = {
+
+
+title:"Reel Video 🎬",
+
+
+text:"Check this reel",
+
+
+url:window.location.href
+
+
+};
+
+
+
+
+if(navigator.share){
+
+
+navigator.share(data)
+
+.then(()=>{
+
+console.log("Shared");
+
+})
+
+.catch(()=>{
+
+console.log("cancel");
+
+});
+
+
+}
+
+else{
+
+
+navigator.clipboard.writeText(window.location.href);
+
+
+alert("Reel link copied!");
+
+}
+
+
+}
+
+
+
+</script>
+
+
+{% endblock %}

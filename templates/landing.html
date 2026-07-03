@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SocialHub – Connect, Share & Grow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:       #3B5BDB;
+    --blue-light: #4C6EF5;
+    --blue-dark:  #2F4AC3;
+    --lavender:   #EEF2FF;
+    --bg:         #F5F7FF;
+    --white:      #FFFFFF;
+    --text:       #1A1D2E;
+    --muted:      #6B7280;
+    --border:     #E5E7EB;
+    --red:        #F03E3E;
+    --green:      #12B886;
+    --purple:     #7950F2;
+    --radius:     16px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: var(--white);
+    box-shadow: 0 1px 0 var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  
+  .logo{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+font-weight:800;
+font-size:22px;
+margin-left:-40px;
+
+}
+
+
+.logo-icon{
+
+width:45px;
+height:45px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#7950F2,#4C6EF5,#22B8CF);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:22px;
+
+}
+
+
+.logo span{
+
+color:#4C6EF5;
+
+}
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 15px; font-weight: 500; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { display: flex; gap: 12px; }
+  .btn-outline {
+    padding: 10px 22px; border-radius: 10px;
+    border: 1.5px solid var(--blue-light); color: var(--blue-light);
+    background: transparent; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .btn-outline:hover { background: var(--lavender); }
+  .btn-primary {
+    padding: 10px 22px; border-radius: 10px;
+    background: var(--blue-light); color: #fff;
+    border: none; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .2s; text-decoration: none;
+  }
+  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 72px 60px 80px;
+    background: linear-gradient(145deg, #F5F7FF 0%, #EEF2FF 60%, #E8EEFF 100%);
+    overflow: hidden; position: relative;
+  }
+  .hero::before {
+    content: ''; position: absolute; right: -120px; top: -120px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(76,110,245,.12) 0%, transparent 70%);
+  }
+  .hero-text { max-width: 520px; position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 99px;
+    font-size: 13px; font-weight: 500; color: var(--blue-light);
+    margin-bottom: 28px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .hero-badge span { color: var(--muted); }
+  .hero h1 {
+    font-size: 56px; font-weight: 800; line-height: 1.1;
+    letter-spacing: -1.5px; color: var(--text); margin-bottom: 20px;
+  }
+  .hero h1 em { font-style: normal; color: var(--blue-light); }
+  .hero p {
+    font-size: 17px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 36px; max-width: 440px;
+  }
+  .hero-actions { display: flex; gap: 14px; }
+  .hero-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 32px; border-radius: 12px;
+    background: var(--blue-light); color: #fff;
+    font-size: 16px; font-weight: 700; border: none;
+    cursor: pointer; transition: all .25s;
+    box-shadow: 0 6px 20px rgba(76,110,245,.4);
+    text-decoration: none;
+  }
+  .hero-btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(76,110,245,.45); }
+  .hero-btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 15px 32px; border-radius: 12px;
+    border: 2px solid var(--blue-light); color: var(--blue-light);
+    font-size: 16px; font-weight: 700; background: transparent;
+    cursor: pointer; transition: all .25s; text-decoration: none;
+  }
+  .hero-btn-outline:hover { background: var(--lavender); transform: translateY(-2px); }
+
+  /* ── PHONE MOCKUP ── */
+  .hero-visual { position: relative; z-index: 2; }
+  .phone-wrap {
+    position: relative; width: 280px;
+  }
+  .phone {
+    background: var(--white);
+    border-radius: 40px;
+    padding: 16px;
+    box-shadow: 0 24px 64px rgba(59,91,219,.18), 0 4px 16px rgba(0,0,0,.08);
+    transform: rotate(-3deg);
+    border: 2px solid rgba(255,255,255,.8);
+  }
+  .phone-notch {
+    width: 80px; height: 10px; background: #E5E7EB;
+    border-radius: 99px; margin: 0 auto 12px;
+  }
+  .phone-post {
+    background: #F5F7FF; border-radius: 12px; padding: 12px; margin-bottom: 8px;
+  }
+  .phone-user { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .phone-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #7950F2, #4C6EF5); }
+  .phone-name { width: 70px; height: 8px; background: #D1D5DB; border-radius: 4px; }
+  .phone-img {
+    width: 100%; height: 90px; border-radius: 8px;
+    background: linear-gradient(135deg, #4C6EF5 0%, #22B8CF 100%);
+    margin-bottom: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+  }
+  .phone-reactions { display: flex; gap: 8px; }
+  .phone-react { font-size: 16px; }
+
+  /* floating badges */
+  .float-badge {
+    position: absolute;
+    border-radius: 14px; padding: 10px 16px;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    animation: float 3s ease-in-out infinite;
+  }
+  .float-like {
+    background: var(--blue-light); color: #fff;
+    top: -20px; left: -40px;
+    animation-delay: 0s;
+  }
+  .float-heart {
+    background: var(--red); color: #fff;
+    right: -50px; top: 60px;
+    animation-delay: .8s;
+  }
+  .float-chat {
+    background: var(--purple); color: #fff;
+    right: -60px; bottom: 80px;
+    animation-delay: 1.6s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
+  }
+
+  /* ── STATS STRIP ── */
+  .stats {
+    display: flex; justify-content: center; gap: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 32px 60px;
+  }
+  .stat-item {
+    flex: 1; text-align: center; padding: 0 32px;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-size: 36px; font-weight: 800; color: var(--blue-light); letter-spacing: -1px; }
+  .stat-label { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+  /* ── FEATURES ── */
+  .features { padding: 80px 60px; background: var(--bg); }
+  .section-header { text-align: center; margin-bottom: 52px; }
+  .section-eyebrow {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--blue-light); margin-bottom: 12px;
+  }
+  .section-header h2 {
+    font-size: 40px; font-weight: 800; letter-spacing: -1px;
+    color: var(--text); margin-bottom: 12px;
+  }
+  .section-header p { font-size: 17px; color: var(--muted); max-width: 480px; margin: 0 auto; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 28px; border: 1.5px solid var(--border);
+    transition: all .25s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(59,91,219,.1); border-color: var(--blue-light); }
+  .card-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 20px;
+  }
+  .icon-blue   { background: #EEF2FF; }
+  .icon-red    { background: #FFF5F5; }
+  .icon-green  { background: #EBFBEE; }
+  .card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .card p  { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── HOW IT WORKS ── */
+  .how { padding: 80px 60px; background: var(--white); }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 52px; }
+  .step { text-align: center; padding: 32px 24px; position: relative; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--blue-light); color: #fff;
+    font-size: 20px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 6px 16px rgba(76,110,245,.35);
+  }
+  .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .step p  { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    margin: 0 60px 80px;
+    background: linear-gradient(135deg, #4C6EF5 0%, #7950F2 100%);
+    border-radius: 24px; padding: 60px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cta-banner h2 { font-size: 40px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 14px; position: relative; }
+  .cta-banner p  { font-size: 17px; color: rgba(255,255,255,.8); margin-bottom: 36px; position: relative; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: var(--blue-light);
+    padding: 16px 40px; border-radius: 12px;
+    font-size: 16px; font-weight: 700;
+    text-decoration: none; position: relative;
+    transition: all .25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111827; padding: 28px 60px;
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo .logo-icon { width: 32px; height: 32px; font-size: 14px; }
+  .footer-logo span { font-size: 18px; font-weight: 800; color: #fff; }
+  .footer-logo span em { font-style: normal; color: #748FFC; }
+  .footer-divider { width: 1px; height: 20px; background: #374151; }
+  .footer-copy { font-size: 13px; color: #6B7280; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { flex-direction: column; padding: 48px 24px 60px; text-align: center; }
+    .hero h1 { font-size: 40px; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { margin-top: 48px; }
+    .stats { padding: 24px; flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .cards, .steps { grid-template-columns: 1fr; }
+    .features, .how { padding: 60px 24px; }
+    .cta-banner { margin: 0 24px 60px; padding: 40px 24px; }
+    .cta-banner h2 { font-size: 28px; }
+    footer { padding: 24px; gap: 12px; }
+    .phone-wrap { width: 220px; }
+  }
+/* ================= TOP MENU ================= */
+
+.top-menu{
+
+    position:fixed;
+
+    top:25px;
+
+    right:60px;
+
+    z-index:9999;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+
+
+/* ADMIN + MOON BUTTON */
+
+.admin-profile,
+.theme-btn{
+
+    background:none !important;
+
+    border:none !important;
+
+    width:auto !important;
+
+    height:auto !important;
+
+    padding:0;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+
+
+.admin-profile:hover,
+.theme-btn:hover{
+
+    transform:scale(1.15);
+
+}
+
+
+
+/* ================= DARK MODE ================= */
+
+
+body.dark-mode{
+
+    background:#121212 !important;
+
+    color:white !important;
+
+}
+
+
+
+/* NAV */
+
+body.dark-mode nav{
+
+    background:#1e1e1e !important;
+
+    box-shadow:0 1px 0 #333;
+
+}
+
+
+
+/* ALL SECTIONS */
+
+
+body.dark-mode .hero,
+body.dark-mode .stats,
+body.dark-mode .features,
+body.dark-mode .how,
+body.dark-mode .card,
+body.dark-mode .step{
+
+    background:#1e1e1e !important;
+
+    color:white !important;
+
+}
+
+
+
+/* TEXT */
+
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4{
+
+    color:white !important;
+
+}
+
+
+
+body.dark-mode p,
+body.dark-mode .stat-label,
+body.dark-mode .section-header p,
+body.dark-mode .card p,
+body.dark-mode .step p{
+
+    color:#cccccc !important;
+
+}
+
+
+
+/* PHONE */
+
+
+body.dark-mode .phone{
+
+    background:#222 !important;
+
+}
+
+
+body.dark-mode .phone-post{
+
+    background:#333 !important;
+
+}
+
+
+
+/* CARD BORDER */
+
+
+body.dark-mode .card,
+body.dark-mode .stats{
+
+    border-color:#444 !important;
+
+}
+
+
+
+/* HERO */
+
+
+body.dark-mode .hero{
+
+    background:linear-gradient(
+        145deg,
+        #121212,
+        #1b1b1b
+    ) !important;
+
+}
+
+
+
+body.dark-mode .hero h1{
+
+    color:white !important;
+
+}
+
+
+
+body.dark-mode .hero p{
+
+    color:#bbb !important;
+
+}
+
+
+
+/* BUTTON */
+
+
+body.dark-mode .hero-btn-outline{
+
+    color:white !important;
+
+    border-color:#777 !important;
+
+}
+
+
+
+/* FEATURES */
+
+
+body.dark-mode .features{
+
+    background:#121212 !important;
+
+}
+
+
+
+body.dark-mode .card{
+
+    background:#1e1e1e !important;
+
+    border-color:#333 !important;
+
+}
+
+
+
+/* HOW */
+
+
+body.dark-mode .how{
+
+    background:#121212 !important;
+
+}
+
+
+
+/* CTA */
+
+
+body.dark-mode .cta-banner{
+
+    opacity:.95;
+
+}
+
+
+
+/* FOOTER */
+
+
+body.dark-mode footer{
+
+    background:#050505 !important;
+
+}
+
+
+
+/* MOON ICON */
+
+body.dark-mode .theme-btn{
+
+    color:white !important;
+
+}
+
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.top-menu{
+
+    right:20px;
+
+}
+
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">👥</div>
+    Social<span>Hub</span>
+  </div>
+ 
+ <div class="top-menu">
+
+
+<a href="/admin/" class="admin-profile">
+
+👤
+
+</a>
+
+
+
+<div onclick="toggleTheme()" class="theme-btn" style="margin-right:-35px;">
+
+🌙
+
+</div>
+
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Connect, Share<br>&amp; <em>Grow</em></h1>
+    <p>Welcome to SocialHub, a modern social media platform where users can connect, share posts, like content and build communities.</p>
+    <div class="hero-actions">
+      <a href="/register/" class="hero-btn-primary">Get Started →</a>
+      <a href="/login/" class="hero-btn-outline">Login →</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="phone-wrap">
+      <div class="float-badge float-like">👍 Liked!</div>
+      <div class="float-badge float-heart">❤️ 2.4k</div>
+      <div class="float-badge float-chat">💬 Reply</div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-post">
+          <div class="phone-user">
+            <div class="phone-avatar"></div>
+            <div class="phone-name"></div>
+          </div>
+          <div class="phone-img">🏔️</div>
+          <div class="phone-reactions">
+            <span class="phone-react">❤️</span>
+            <span class="phone-react">👍</span>
+            <span class="phone-react">💬</span>
+          </div>
+        </div>
+        <div class="phone-post" style="opacity:.6;">
+          <div class="phone-user">
+            <div class="phone-avatar" style="background:linear-gradient(135deg,#12B886,#20C997);"></div>
+            <div class="phone-name"></div>
+          </div>
+          <div style="height:6px;background:#E5E7EB;border-radius:4px;margin-bottom:6px;"></div>
+          <div style="height:6px;background:#E5E7EB;border-radius:4px;width:70%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item"><div class="stat-num">2M+</div><div class="stat-label">Active Users</div></div>
+  <div class="stat-item"><div class="stat-num">50M+</div><div class="stat-label">Posts Shared</div></div>
+  <div class="stat-item"><div class="stat-num">120+</div><div class="stat-label">Countries</div></div>
+  <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">App Rating</div></div>
+</div>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-header">
+    <div class="section-eyebrow">Why Choose Us</div>
+    <h2>Why Choose SocialHub?</h2>
+    <p>Everything you need in one social platform</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon icon-blue">👥</div>
+      <h3>Connect People</h3>
+      <p>Follow friends and build your network. Discover people who share your interests and grow meaningful connections every day.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-red">❤️</div>
+      <h3>Like &amp; Engage</h3>
+      <p>React and interact with posts instantly. Express yourself with reactions, comments, and shares that keep the conversation alive.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-green">🖼️</div>
+      <h3>Share Moments</h3>
+      <p>Post updates, photos and memories. Capture life's best moments and share them with your community in seconds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-header">
+    <div class="section-eyebrow">Get Started</div>
+    <h2>How It Works</h2>
+    <p>Three simple steps to join the community</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Create an Account</h3>
+      <p>Sign up in seconds with your email or phone number. No credit card required, always free to join.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Find Your People</h3>
+      <p>Follow friends, creators, and communities that match your interests and passions.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Start Sharing</h3>
+      <p>Post your first update, photo, or story and start engaging with your growing network.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <h2>Ready to Join SocialHub?</h2>
+  <p>Connect with millions of people sharing moments every day.</p>
+  <a href="/register/" class="cta-btn">🚀 Create Free Account</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="logo-icon" style="width:32px;height:32px;font-size:14px;">👥</div>
+    <span>Social<em>Hub</em></span>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2026 SocialHub &nbsp;|&nbsp; Built with Django &amp; Bootstrap</div>
+</footer>
+<script>
+
+function toggleTheme(){
+
+    document.body.classList.toggle("dark-mode");
+
+
+    if(document.body.classList.contains("dark-mode")){
+
+        localStorage.setItem("theme","dark");
+
+    }
+    else{
+
+        localStorage.setItem("theme","light");
+
+    }
+
+}
+
+
+
+// refresh ke baad theme maintain rahega
+
+window.onload = function(){
+
+    if(localStorage.getItem("theme") === "dark"){
+
+        document.body.classList.add("dark-mode");
+
+    }
+
+}
+
+</script>
+</body>
+</html>

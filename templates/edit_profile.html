@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.edit-profile{
+
+    margin-top:30px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+
+.edit-title{
+
+    font-size:22px;
+
+    font-weight:700;
+
+    color:#1A1D2E;
+
+}
+
+
+
+label{
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+
+.save-btn{
+
+    background:#4C6EF5;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 25px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+}
+
+
+.save-btn:hover{
+
+    background:#2F4AC3;
+
+}
+
+
+
+.profile-input{
+
+    border-radius:10px;
+
+    padding:10px;
+
+}
+
+
+
+</style>
+
+
+
+
+<div class="edit-profile">
+
+
+<h3 class="edit-title">
+    ✏️ Edit Profile
+</h3>
+
+
+
+<form method="POST"
+      enctype="multipart/form-data">
+
+
+{% csrf_token %}
+
+
+
+<label class="mt-3">
+    Profile Picture
+</label>
+
+
+<input 
+type="file"
+name="profile_pic"
+class="form-control profile-input mt-2">
+
+
+
+<label class="mt-3">
+    Bio
+</label>
+
+
+<textarea
+
+name="bio"
+
+rows="4"
+
+class="form-control profile-input mt-2">
+
+
+{{ request.user.profile.bio }}
+
+
+</textarea>
+
+
+
+<button type="submit"
+class="save-btn mt-4">
+
+💾 Save Changes
+
+</button>
+
+
+
+
+</form>
+
+
+</div>
+
+
+
+{% endblock %}
+

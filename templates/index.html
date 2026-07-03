@@ -1,0 +1,482 @@
+{% block content %}
+
+<style>
+body{
+    background:#fafafa;
+}
+
+.story-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+}
+
+.story{
+    text-align:center;
+}
+
+.story img{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    border:3px solid #d62976;
+}
+
+.post{
+    background:white;
+    margin-top:20px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+}
+
+.post-media{
+    width:100%;
+    border-radius:15px;
+    margin-top:10px;
+}
+
+.action{
+    font-size:18px;
+    margin-top:15px;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+
+    background:rgba(255,255,255,0.15); /* transparent */
+
+    backdrop-filter:blur(10px); /* glass effect */
+
+    -webkit-backdrop-filter:blur(10px);
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    padding:12px;
+
+    border-top:1px solid rgba(255,255,255,0.2);
+
+    font-size:28px;
+
+    z-index:999;
+}
+
+.bottom-nav div{
+    cursor:pointer;
+}
+
+.profile-icon{
+width:38px;
+height:38px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.msg-icon{
+    font-size:30px;
+    transform:rotate(-45deg);
+    display:inline-block;
+}
+
+
+.top-menu{
+
+    position:fixed;
+
+    top:12px;
+
+    right:15px;
+
+    z-index:9999;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+/* DARK MODE */
+
+.dark-mode{
+    background:#121212 !important;
+    color:white;
+}
+
+
+/* story section */
+.dark-mode .story-box{
+    background:#1e1e1e;
+}
+
+.dark-mode .story-box p{
+    color:white;
+}
+
+
+/* posts */
+.dark-mode .post{
+
+    background:#1e1e1e;
+
+    color:white;
+
+}
+
+
+/* input comment */
+.dark-mode input{
+
+    background:#333;
+
+    color:white;
+
+    border:1px solid #555;
+
+}
+
+
+/* buttons */
+.dark-mode button{
+
+    background:#333;
+
+    color:white;
+
+}
+
+
+/* bottom navbar */
+.dark-mode .bottom-nav{
+
+    background:rgba(20,20,20,0.7);
+
+}
+
+
+/* admin + moon */
+.dark-mode .admin-profile{
+
+    color:white;
+
+}
+
+
+.dark-mode .theme-btn{
+
+    color:white;
+
+}
+
+
+
+/* TOP RIGHT */
+
+
+.top-menu{
+
+position:fixed;
+
+top:30px;
+
+right:60px;
+
+display:flex;
+
+gap:20px;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+
+
+.admin-profile,
+.theme-btn{
+
+font-size:22px;
+
+text-decoration:none;
+margin-top:-20px;
+cursor:pointer;
+
+background:none;
+
+border:none;
+
+}
+.theme-btn{
+margin-right:-40px;}
+.admin-profile:hover,
+.theme-btn:hover{
+
+transform:scale(1.15);
+
+}
+
+</style>
+
+
+
+
+<div class="top-menu">
+
+
+<a href="/admin/" class="admin-profile">
+
+👤
+
+</a>
+
+
+
+<div onclick="toggleTheme()" class="theme-btn">
+
+🌙
+
+</div>
+
+
+</div>
+
+<div class="container mt-4">
+<h3 style="margin-top:20px;">Stories</h3>
+
+<div class="story-box">
+
+<!-- Add Story -->
+
+<div class="story">
+
+<a href="/add-story/">
+
+<img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png">
+
+</a>
+
+<p>Add</p>
+
+</div>
+
+
+<!-- All Stories -->
+
+{% for story in story_users %}
+
+<div class="story">
+
+<a href="/story/{{ story.id }}/">
+
+    {% if story.image %}
+
+        <img src="{{ story.image.url }}">
+
+    {% elif story.video %}
+
+        <video width="75" height="75"
+               style="border-radius:50%;object-fit:cover;">
+            <source src="{{ story.video.url }}">
+        </video>
+
+    {% endif %}
+
+</a>
+
+<p>{{ story.user.username }}</p>
+
+
+</div>
+
+{% empty %}
+
+<div class="story">
+
+
+<p>No Stories</p>
+
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% for post in posts %}
+
+
+
+<div class="post">
+
+
+
+<h5>
+
+👤 {{ post.user.username }}
+
+</h5>
+
+
+
+
+
+<p>
+
+{{ post.content }}
+
+</p>
+
+
+
+
+
+{% if post.image %}
+
+
+<img src="{{ post.image.url }}" class="post-media">
+
+
+{% endif %}
+
+
+
+
+
+
+
+{% if post.video %}
+
+
+<video controls class="post-media">
+
+
+<source src="{{ post.video.url }}">
+
+
+</video>
+
+
+{% endif %}
+<div class="action">
+
+<a href="{% url 'like_post' post.id %}"
+style="text-decoration:none;color:red;">
+
+❤️ Like ({{ post.likes.count }})
+
+</a>
+
+&nbsp;&nbsp;
+
+<form action="{% url 'add_comment' post.id %}"
+      method="POST"
+      style="display:inline;">
+    {% csrf_token %}
+    <input type="text"
+           name="comment"
+           placeholder="Comment..."
+           style="padding:3px;">
+    <button type="submit">
+        💬
+    </button>
+</form>
+
+&nbsp;&nbsp;
+
+<button onclick="sharePost('{{ request.build_absolute_uri }}')">
+    📤 Share
+</button>
+
+</div>
+{% empty %}
+<div class="post">No posts yet 🚀</div>
+{% endfor %}
+</div>
+
+<!-- BOTTOM NAV (SEARCH REMOVED) -->
+<div class="bottom-nav">
+<div>
+<a href="/home/" style="text-decoration:none;color:black;">
+🏠</a>
+</div>
+
+<div>
+<a href="/reels/" style="text-decoration:none;color:black;">
+🎬</a>
+</div>
+
+
+
+<div>
+<a href="/profile/{{request.user.username}}/">
+
+{% if request.user.profile.profile_pic %}
+
+<img src="{{ request.user.profile.profile_pic.url }}"
+class="profile-icon">
+
+{% else %}
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="profile-icon">
+{% endif %}
+
+</a>
+</div>
+</div>
+
+
+<script>
+
+function sharePost(url){
+
+    if(navigator.share){
+
+        navigator.share({
+            title:'Post',
+            url:url
+        });
+
+    }else{
+
+        navigator.clipboard.writeText(url);
+        alert("Link Copied!");
+
+    }
+
+}
+
+
+
+
+function toggleTheme(){
+
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+        localStorage.setItem("theme","dark");
+    }else{
+        localStorage.setItem("theme","light");
+    }
+
+}
+
+window.onload = function(){
+
+    if(localStorage.getItem("theme") === "dark"){
+        document.body.classList.add("dark-mode");
+    }
+
+}
+
+
+</script>
+{% endblock %}
